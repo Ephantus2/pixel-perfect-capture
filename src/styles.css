@@ -122,5 +122,28 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
   }
 }
+
+@utility surface-card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+@utility auth-backdrop {
+  background:
+    radial-gradient(120% 90% at 10% 0%, oklch(0.34 0.06 158) 0%, transparent 60%),
+    linear-gradient(160deg, oklch(0.28 0.055 158) 0%, oklch(0.22 0.04 165) 100%);
+}
+
