@@ -1,24 +1,41 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { GraduationCap } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { dashboardPathFor } from "@/context/AuthContext";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Chuo LMS | University Learning Management System" },
+      {
+        name: "description",
+        content:
+          "Chuo LMS connects students, lecturers and administrators: enrolment, course materials, assessments, submissions and grading.",
+      },
+      { property: "og:title", content: "Chuo LMS | University Learning Management System" },
+      {
+        property: "og:description",
+        content: "Enrolment, course materials, assessments, submissions and grading in one portal.",
+      },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
+  const { user, initializing } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (initializing) return;
+    navigate({ to: user ? dashboardPathFor(user.role) : "/login", replace: true });
+  }, [initializing, user, navigate]);
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="flex min-h-screen flex-col items-center justify-center gap-3 bg-background">
+      <GraduationCap className="size-8 animate-pulse text-primary" />
+      <p className="text-sm text-muted-foreground">Loading Chuo LMS…</p>
     </div>
   );
 }
