@@ -12,8 +12,21 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as AdminAcademicRouteImport } from './routes/admin/academic'
+import { Route as AdminCoursesRouteImport } from './routes/admin/courses'
+import { Route as AdminDashboardRouteImport } from './routes/admin/dashboard'
 import { Route as AdminProfileRouteImport } from './routes/admin/profile'
+import { Route as AdminStatisticsRouteImport } from './routes/admin/statistics'
+import { Route as AdminUsersRouteImport } from './routes/admin/users'
+import { Route as CoursesCourseCodeRouteImport } from './routes/courses/$courseCode'
+import { Route as LecturerAssessmentsRouteImport } from './routes/lecturer/assessments'
+import { Route as LecturerCoursesRouteImport } from './routes/lecturer/courses'
+import { Route as LecturerDashboardRouteImport } from './routes/lecturer/dashboard'
+import { Route as LecturerGradingRouteImport } from './routes/lecturer/grading'
+import { Route as LecturerMaterialsRouteImport } from './routes/lecturer/materials'
 import { Route as LecturerProfileRouteImport } from './routes/lecturer/profile'
+import { Route as LecturerStatisticsRouteImport } from './routes/lecturer/statistics'
+import { Route as LecturerSubmissionsRouteImport } from './routes/lecturer/submissions'
 import { Route as StudentAssessmentsRouteImport } from './routes/student/assessments'
 import { Route as StudentCoursesRouteImport } from './routes/student/courses'
 import { Route as StudentDashboardRouteImport } from './routes/student/dashboard'
@@ -36,14 +49,79 @@ const RegisterRoute = RegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminAcademicRoute = AdminAcademicRouteImport.update({
+  id: '/admin/academic',
+  path: '/admin/academic',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminCoursesRoute = AdminCoursesRouteImport.update({
+  id: '/admin/courses',
+  path: '/admin/courses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminDashboardRoute = AdminDashboardRouteImport.update({
+  id: '/admin/dashboard',
+  path: '/admin/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminProfileRoute = AdminProfileRouteImport.update({
   id: '/admin/profile',
   path: '/admin/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminStatisticsRoute = AdminStatisticsRouteImport.update({
+  id: '/admin/statistics',
+  path: '/admin/statistics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoursesCourseCodeRoute = CoursesCourseCodeRouteImport.update({
+  id: '/courses/$courseCode',
+  path: '/courses/$courseCode',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LecturerAssessmentsRoute = LecturerAssessmentsRouteImport.update({
+  id: '/lecturer/assessments',
+  path: '/lecturer/assessments',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LecturerCoursesRoute = LecturerCoursesRouteImport.update({
+  id: '/lecturer/courses',
+  path: '/lecturer/courses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LecturerDashboardRoute = LecturerDashboardRouteImport.update({
+  id: '/lecturer/dashboard',
+  path: '/lecturer/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LecturerGradingRoute = LecturerGradingRouteImport.update({
+  id: '/lecturer/grading',
+  path: '/lecturer/grading',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LecturerMaterialsRoute = LecturerMaterialsRouteImport.update({
+  id: '/lecturer/materials',
+  path: '/lecturer/materials',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LecturerProfileRoute = LecturerProfileRouteImport.update({
   id: '/lecturer/profile',
   path: '/lecturer/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LecturerStatisticsRoute = LecturerStatisticsRouteImport.update({
+  id: '/lecturer/statistics',
+  path: '/lecturer/statistics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LecturerSubmissionsRoute = LecturerSubmissionsRouteImport.update({
+  id: '/lecturer/submissions',
+  path: '/lecturer/submissions',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StudentAssessmentsRoute = StudentAssessmentsRouteImport.update({
@@ -81,8 +159,21 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/admin/academic': typeof AdminAcademicRoute
+  '/admin/courses': typeof AdminCoursesRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/profile': typeof AdminProfileRoute
+  '/admin/statistics': typeof AdminStatisticsRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/courses/$courseCode': typeof CoursesCourseCodeRoute
+  '/lecturer/assessments': typeof LecturerAssessmentsRoute
+  '/lecturer/courses': typeof LecturerCoursesRoute
+  '/lecturer/dashboard': typeof LecturerDashboardRoute
+  '/lecturer/grading': typeof LecturerGradingRoute
+  '/lecturer/materials': typeof LecturerMaterialsRoute
   '/lecturer/profile': typeof LecturerProfileRoute
+  '/lecturer/statistics': typeof LecturerStatisticsRoute
+  '/lecturer/submissions': typeof LecturerSubmissionsRoute
   '/student/assessments': typeof StudentAssessmentsRoute
   '/student/courses': typeof StudentCoursesRoute
   '/student/dashboard': typeof StudentDashboardRoute
@@ -94,8 +185,21 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/admin/academic': typeof AdminAcademicRoute
+  '/admin/courses': typeof AdminCoursesRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/profile': typeof AdminProfileRoute
+  '/admin/statistics': typeof AdminStatisticsRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/courses/$courseCode': typeof CoursesCourseCodeRoute
+  '/lecturer/assessments': typeof LecturerAssessmentsRoute
+  '/lecturer/courses': typeof LecturerCoursesRoute
+  '/lecturer/dashboard': typeof LecturerDashboardRoute
+  '/lecturer/grading': typeof LecturerGradingRoute
+  '/lecturer/materials': typeof LecturerMaterialsRoute
   '/lecturer/profile': typeof LecturerProfileRoute
+  '/lecturer/statistics': typeof LecturerStatisticsRoute
+  '/lecturer/submissions': typeof LecturerSubmissionsRoute
   '/student/assessments': typeof StudentAssessmentsRoute
   '/student/courses': typeof StudentCoursesRoute
   '/student/dashboard': typeof StudentDashboardRoute
@@ -108,8 +212,21 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/admin/academic': typeof AdminAcademicRoute
+  '/admin/courses': typeof AdminCoursesRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/profile': typeof AdminProfileRoute
+  '/admin/statistics': typeof AdminStatisticsRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/courses/$courseCode': typeof CoursesCourseCodeRoute
+  '/lecturer/assessments': typeof LecturerAssessmentsRoute
+  '/lecturer/courses': typeof LecturerCoursesRoute
+  '/lecturer/dashboard': typeof LecturerDashboardRoute
+  '/lecturer/grading': typeof LecturerGradingRoute
+  '/lecturer/materials': typeof LecturerMaterialsRoute
   '/lecturer/profile': typeof LecturerProfileRoute
+  '/lecturer/statistics': typeof LecturerStatisticsRoute
+  '/lecturer/submissions': typeof LecturerSubmissionsRoute
   '/student/assessments': typeof StudentAssessmentsRoute
   '/student/courses': typeof StudentCoursesRoute
   '/student/dashboard': typeof StudentDashboardRoute
@@ -123,8 +240,21 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/register'
+    | '/admin/academic'
+    | '/admin/courses'
+    | '/admin/dashboard'
     | '/admin/profile'
+    | '/admin/statistics'
+    | '/admin/users'
+    | '/courses/$courseCode'
+    | '/lecturer/assessments'
+    | '/lecturer/courses'
+    | '/lecturer/dashboard'
+    | '/lecturer/grading'
+    | '/lecturer/materials'
     | '/lecturer/profile'
+    | '/lecturer/statistics'
+    | '/lecturer/submissions'
     | '/student/assessments'
     | '/student/courses'
     | '/student/dashboard'
@@ -136,8 +266,21 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/register'
+    | '/admin/academic'
+    | '/admin/courses'
+    | '/admin/dashboard'
     | '/admin/profile'
+    | '/admin/statistics'
+    | '/admin/users'
+    | '/courses/$courseCode'
+    | '/lecturer/assessments'
+    | '/lecturer/courses'
+    | '/lecturer/dashboard'
+    | '/lecturer/grading'
+    | '/lecturer/materials'
     | '/lecturer/profile'
+    | '/lecturer/statistics'
+    | '/lecturer/submissions'
     | '/student/assessments'
     | '/student/courses'
     | '/student/dashboard'
@@ -149,8 +292,21 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/register'
+    | '/admin/academic'
+    | '/admin/courses'
+    | '/admin/dashboard'
     | '/admin/profile'
+    | '/admin/statistics'
+    | '/admin/users'
+    | '/courses/$courseCode'
+    | '/lecturer/assessments'
+    | '/lecturer/courses'
+    | '/lecturer/dashboard'
+    | '/lecturer/grading'
+    | '/lecturer/materials'
     | '/lecturer/profile'
+    | '/lecturer/statistics'
+    | '/lecturer/submissions'
     | '/student/assessments'
     | '/student/courses'
     | '/student/dashboard'
@@ -163,8 +319,21 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
+  AdminAcademicRoute: typeof AdminAcademicRoute
+  AdminCoursesRoute: typeof AdminCoursesRoute
+  AdminDashboardRoute: typeof AdminDashboardRoute
   AdminProfileRoute: typeof AdminProfileRoute
+  AdminStatisticsRoute: typeof AdminStatisticsRoute
+  AdminUsersRoute: typeof AdminUsersRoute
+  CoursesCourseCodeRoute: typeof CoursesCourseCodeRoute
+  LecturerAssessmentsRoute: typeof LecturerAssessmentsRoute
+  LecturerCoursesRoute: typeof LecturerCoursesRoute
+  LecturerDashboardRoute: typeof LecturerDashboardRoute
+  LecturerGradingRoute: typeof LecturerGradingRoute
+  LecturerMaterialsRoute: typeof LecturerMaterialsRoute
   LecturerProfileRoute: typeof LecturerProfileRoute
+  LecturerStatisticsRoute: typeof LecturerStatisticsRoute
+  LecturerSubmissionsRoute: typeof LecturerSubmissionsRoute
   StudentAssessmentsRoute: typeof StudentAssessmentsRoute
   StudentCoursesRoute: typeof StudentCoursesRoute
   StudentDashboardRoute: typeof StudentDashboardRoute
@@ -196,6 +365,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/academic': {
+      id: '/admin/academic'
+      path: '/admin/academic'
+      fullPath: '/admin/academic'
+      preLoaderRoute: typeof AdminAcademicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/courses': {
+      id: '/admin/courses'
+      path: '/admin/courses'
+      fullPath: '/admin/courses'
+      preLoaderRoute: typeof AdminCoursesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/dashboard': {
+      id: '/admin/dashboard'
+      path: '/admin/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/profile': {
       id: '/admin/profile'
       path: '/admin/profile'
@@ -203,11 +393,81 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/statistics': {
+      id: '/admin/statistics'
+      path: '/admin/statistics'
+      fullPath: '/admin/statistics'
+      preLoaderRoute: typeof AdminStatisticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/courses/$courseCode': {
+      id: '/courses/$courseCode'
+      path: '/courses/$courseCode'
+      fullPath: '/courses/$courseCode'
+      preLoaderRoute: typeof CoursesCourseCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lecturer/assessments': {
+      id: '/lecturer/assessments'
+      path: '/lecturer/assessments'
+      fullPath: '/lecturer/assessments'
+      preLoaderRoute: typeof LecturerAssessmentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lecturer/courses': {
+      id: '/lecturer/courses'
+      path: '/lecturer/courses'
+      fullPath: '/lecturer/courses'
+      preLoaderRoute: typeof LecturerCoursesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lecturer/dashboard': {
+      id: '/lecturer/dashboard'
+      path: '/lecturer/dashboard'
+      fullPath: '/lecturer/dashboard'
+      preLoaderRoute: typeof LecturerDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lecturer/grading': {
+      id: '/lecturer/grading'
+      path: '/lecturer/grading'
+      fullPath: '/lecturer/grading'
+      preLoaderRoute: typeof LecturerGradingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lecturer/materials': {
+      id: '/lecturer/materials'
+      path: '/lecturer/materials'
+      fullPath: '/lecturer/materials'
+      preLoaderRoute: typeof LecturerMaterialsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lecturer/profile': {
       id: '/lecturer/profile'
       path: '/lecturer/profile'
       fullPath: '/lecturer/profile'
       preLoaderRoute: typeof LecturerProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lecturer/statistics': {
+      id: '/lecturer/statistics'
+      path: '/lecturer/statistics'
+      fullPath: '/lecturer/statistics'
+      preLoaderRoute: typeof LecturerStatisticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lecturer/submissions': {
+      id: '/lecturer/submissions'
+      path: '/lecturer/submissions'
+      fullPath: '/lecturer/submissions'
+      preLoaderRoute: typeof LecturerSubmissionsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/student/assessments': {
@@ -259,8 +519,21 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
+  AdminAcademicRoute: AdminAcademicRoute,
+  AdminCoursesRoute: AdminCoursesRoute,
+  AdminDashboardRoute: AdminDashboardRoute,
   AdminProfileRoute: AdminProfileRoute,
+  AdminStatisticsRoute: AdminStatisticsRoute,
+  AdminUsersRoute: AdminUsersRoute,
+  CoursesCourseCodeRoute: CoursesCourseCodeRoute,
+  LecturerAssessmentsRoute: LecturerAssessmentsRoute,
+  LecturerCoursesRoute: LecturerCoursesRoute,
+  LecturerDashboardRoute: LecturerDashboardRoute,
+  LecturerGradingRoute: LecturerGradingRoute,
+  LecturerMaterialsRoute: LecturerMaterialsRoute,
   LecturerProfileRoute: LecturerProfileRoute,
+  LecturerStatisticsRoute: LecturerStatisticsRoute,
+  LecturerSubmissionsRoute: LecturerSubmissionsRoute,
   StudentAssessmentsRoute: StudentAssessmentsRoute,
   StudentCoursesRoute: StudentCoursesRoute,
   StudentDashboardRoute: StudentDashboardRoute,
