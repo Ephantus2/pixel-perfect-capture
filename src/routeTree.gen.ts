@@ -13,7 +13,12 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as AdminProfileRouteImport } from './routes/admin/profile'
+import { Route as LecturerAssessmentsRouteImport } from './routes/lecturer/assessments'
+import { Route as LecturerCoursesRouteImport } from './routes/lecturer/courses'
+import { Route as LecturerDashboardRouteImport } from './routes/lecturer/dashboard'
+import { Route as LecturerMaterialsRouteImport } from './routes/lecturer/materials'
 import { Route as LecturerProfileRouteImport } from './routes/lecturer/profile'
+import { Route as LecturerStatisticsRouteImport } from './routes/lecturer/statistics'
 import { Route as StudentAssessmentsRouteImport } from './routes/student/assessments'
 import { Route as StudentCoursesRouteImport } from './routes/student/courses'
 import { Route as StudentDashboardRouteImport } from './routes/student/dashboard'
@@ -41,9 +46,34 @@ const AdminProfileRoute = AdminProfileRouteImport.update({
   path: '/admin/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LecturerAssessmentsRoute = LecturerAssessmentsRouteImport.update({
+  id: '/lecturer/assessments',
+  path: '/lecturer/assessments',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LecturerCoursesRoute = LecturerCoursesRouteImport.update({
+  id: '/lecturer/courses',
+  path: '/lecturer/courses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LecturerDashboardRoute = LecturerDashboardRouteImport.update({
+  id: '/lecturer/dashboard',
+  path: '/lecturer/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LecturerMaterialsRoute = LecturerMaterialsRouteImport.update({
+  id: '/lecturer/materials',
+  path: '/lecturer/materials',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LecturerProfileRoute = LecturerProfileRouteImport.update({
   id: '/lecturer/profile',
   path: '/lecturer/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LecturerStatisticsRoute = LecturerStatisticsRouteImport.update({
+  id: '/lecturer/statistics',
+  path: '/lecturer/statistics',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StudentAssessmentsRoute = StudentAssessmentsRouteImport.update({
@@ -82,7 +112,12 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/admin/profile': typeof AdminProfileRoute
+  '/lecturer/assessments': typeof LecturerAssessmentsRoute
+  '/lecturer/courses': typeof LecturerCoursesRoute
+  '/lecturer/dashboard': typeof LecturerDashboardRoute
+  '/lecturer/materials': typeof LecturerMaterialsRoute
   '/lecturer/profile': typeof LecturerProfileRoute
+  '/lecturer/statistics': typeof LecturerStatisticsRoute
   '/student/assessments': typeof StudentAssessmentsRoute
   '/student/courses': typeof StudentCoursesRoute
   '/student/dashboard': typeof StudentDashboardRoute
@@ -95,7 +130,12 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/admin/profile': typeof AdminProfileRoute
+  '/lecturer/assessments': typeof LecturerAssessmentsRoute
+  '/lecturer/courses': typeof LecturerCoursesRoute
+  '/lecturer/dashboard': typeof LecturerDashboardRoute
+  '/lecturer/materials': typeof LecturerMaterialsRoute
   '/lecturer/profile': typeof LecturerProfileRoute
+  '/lecturer/statistics': typeof LecturerStatisticsRoute
   '/student/assessments': typeof StudentAssessmentsRoute
   '/student/courses': typeof StudentCoursesRoute
   '/student/dashboard': typeof StudentDashboardRoute
@@ -109,7 +149,12 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/admin/profile': typeof AdminProfileRoute
+  '/lecturer/assessments': typeof LecturerAssessmentsRoute
+  '/lecturer/courses': typeof LecturerCoursesRoute
+  '/lecturer/dashboard': typeof LecturerDashboardRoute
+  '/lecturer/materials': typeof LecturerMaterialsRoute
   '/lecturer/profile': typeof LecturerProfileRoute
+  '/lecturer/statistics': typeof LecturerStatisticsRoute
   '/student/assessments': typeof StudentAssessmentsRoute
   '/student/courses': typeof StudentCoursesRoute
   '/student/dashboard': typeof StudentDashboardRoute
@@ -124,7 +169,12 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/admin/profile'
+    | '/lecturer/assessments'
+    | '/lecturer/courses'
+    | '/lecturer/dashboard'
+    | '/lecturer/materials'
     | '/lecturer/profile'
+    | '/lecturer/statistics'
     | '/student/assessments'
     | '/student/courses'
     | '/student/dashboard'
@@ -137,7 +187,12 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/admin/profile'
+    | '/lecturer/assessments'
+    | '/lecturer/courses'
+    | '/lecturer/dashboard'
+    | '/lecturer/materials'
     | '/lecturer/profile'
+    | '/lecturer/statistics'
     | '/student/assessments'
     | '/student/courses'
     | '/student/dashboard'
@@ -150,7 +205,12 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/admin/profile'
+    | '/lecturer/assessments'
+    | '/lecturer/courses'
+    | '/lecturer/dashboard'
+    | '/lecturer/materials'
     | '/lecturer/profile'
+    | '/lecturer/statistics'
     | '/student/assessments'
     | '/student/courses'
     | '/student/dashboard'
@@ -164,7 +224,12 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
   AdminProfileRoute: typeof AdminProfileRoute
+  LecturerAssessmentsRoute: typeof LecturerAssessmentsRoute
+  LecturerCoursesRoute: typeof LecturerCoursesRoute
+  LecturerDashboardRoute: typeof LecturerDashboardRoute
+  LecturerMaterialsRoute: typeof LecturerMaterialsRoute
   LecturerProfileRoute: typeof LecturerProfileRoute
+  LecturerStatisticsRoute: typeof LecturerStatisticsRoute
   StudentAssessmentsRoute: typeof StudentAssessmentsRoute
   StudentCoursesRoute: typeof StudentCoursesRoute
   StudentDashboardRoute: typeof StudentDashboardRoute
@@ -203,11 +268,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lecturer/assessments': {
+      id: '/lecturer/assessments'
+      path: '/lecturer/assessments'
+      fullPath: '/lecturer/assessments'
+      preLoaderRoute: typeof LecturerAssessmentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lecturer/courses': {
+      id: '/lecturer/courses'
+      path: '/lecturer/courses'
+      fullPath: '/lecturer/courses'
+      preLoaderRoute: typeof LecturerCoursesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lecturer/dashboard': {
+      id: '/lecturer/dashboard'
+      path: '/lecturer/dashboard'
+      fullPath: '/lecturer/dashboard'
+      preLoaderRoute: typeof LecturerDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lecturer/materials': {
+      id: '/lecturer/materials'
+      path: '/lecturer/materials'
+      fullPath: '/lecturer/materials'
+      preLoaderRoute: typeof LecturerMaterialsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lecturer/profile': {
       id: '/lecturer/profile'
       path: '/lecturer/profile'
       fullPath: '/lecturer/profile'
       preLoaderRoute: typeof LecturerProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lecturer/statistics': {
+      id: '/lecturer/statistics'
+      path: '/lecturer/statistics'
+      fullPath: '/lecturer/statistics'
+      preLoaderRoute: typeof LecturerStatisticsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/student/assessments': {
@@ -260,7 +360,12 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
   AdminProfileRoute: AdminProfileRoute,
+  LecturerAssessmentsRoute: LecturerAssessmentsRoute,
+  LecturerCoursesRoute: LecturerCoursesRoute,
+  LecturerDashboardRoute: LecturerDashboardRoute,
+  LecturerMaterialsRoute: LecturerMaterialsRoute,
   LecturerProfileRoute: LecturerProfileRoute,
+  LecturerStatisticsRoute: LecturerStatisticsRoute,
   StudentAssessmentsRoute: StudentAssessmentsRoute,
   StudentCoursesRoute: StudentCoursesRoute,
   StudentDashboardRoute: StudentDashboardRoute,
