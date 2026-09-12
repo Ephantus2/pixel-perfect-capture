@@ -13,10 +13,12 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as AdminAcademicRouteImport } from './routes/admin/academic'
+import { Route as AdminCoursesRouteImport } from './routes/admin/courses'
 import { Route as AdminDashboardRouteImport } from './routes/admin/dashboard'
 import { Route as AdminProfileRouteImport } from './routes/admin/profile'
 import { Route as AdminStatisticsRouteImport } from './routes/admin/statistics'
 import { Route as AdminUsersRouteImport } from './routes/admin/users'
+import { Route as CoursesCourseCodeRouteImport } from './routes/courses/$courseCode'
 import { Route as LecturerAssessmentsRouteImport } from './routes/lecturer/assessments'
 import { Route as LecturerCoursesRouteImport } from './routes/lecturer/courses'
 import { Route as LecturerDashboardRouteImport } from './routes/lecturer/dashboard'
@@ -52,6 +54,11 @@ const AdminAcademicRoute = AdminAcademicRouteImport.update({
   path: '/admin/academic',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminCoursesRoute = AdminCoursesRouteImport.update({
+  id: '/admin/courses',
+  path: '/admin/courses',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminDashboardRoute = AdminDashboardRouteImport.update({
   id: '/admin/dashboard',
   path: '/admin/dashboard',
@@ -70,6 +77,11 @@ const AdminStatisticsRoute = AdminStatisticsRouteImport.update({
 const AdminUsersRoute = AdminUsersRouteImport.update({
   id: '/admin/users',
   path: '/admin/users',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoursesCourseCodeRoute = CoursesCourseCodeRouteImport.update({
+  id: '/courses/$courseCode',
+  path: '/courses/$courseCode',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LecturerAssessmentsRoute = LecturerAssessmentsRouteImport.update({
@@ -148,10 +160,12 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/admin/academic': typeof AdminAcademicRoute
+  '/admin/courses': typeof AdminCoursesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/profile': typeof AdminProfileRoute
   '/admin/statistics': typeof AdminStatisticsRoute
   '/admin/users': typeof AdminUsersRoute
+  '/courses/$courseCode': typeof CoursesCourseCodeRoute
   '/lecturer/assessments': typeof LecturerAssessmentsRoute
   '/lecturer/courses': typeof LecturerCoursesRoute
   '/lecturer/dashboard': typeof LecturerDashboardRoute
@@ -172,10 +186,12 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/admin/academic': typeof AdminAcademicRoute
+  '/admin/courses': typeof AdminCoursesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/profile': typeof AdminProfileRoute
   '/admin/statistics': typeof AdminStatisticsRoute
   '/admin/users': typeof AdminUsersRoute
+  '/courses/$courseCode': typeof CoursesCourseCodeRoute
   '/lecturer/assessments': typeof LecturerAssessmentsRoute
   '/lecturer/courses': typeof LecturerCoursesRoute
   '/lecturer/dashboard': typeof LecturerDashboardRoute
@@ -197,10 +213,12 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/admin/academic': typeof AdminAcademicRoute
+  '/admin/courses': typeof AdminCoursesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/profile': typeof AdminProfileRoute
   '/admin/statistics': typeof AdminStatisticsRoute
   '/admin/users': typeof AdminUsersRoute
+  '/courses/$courseCode': typeof CoursesCourseCodeRoute
   '/lecturer/assessments': typeof LecturerAssessmentsRoute
   '/lecturer/courses': typeof LecturerCoursesRoute
   '/lecturer/dashboard': typeof LecturerDashboardRoute
@@ -223,10 +241,12 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/admin/academic'
+    | '/admin/courses'
     | '/admin/dashboard'
     | '/admin/profile'
     | '/admin/statistics'
     | '/admin/users'
+    | '/courses/$courseCode'
     | '/lecturer/assessments'
     | '/lecturer/courses'
     | '/lecturer/dashboard'
@@ -247,10 +267,12 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/admin/academic'
+    | '/admin/courses'
     | '/admin/dashboard'
     | '/admin/profile'
     | '/admin/statistics'
     | '/admin/users'
+    | '/courses/$courseCode'
     | '/lecturer/assessments'
     | '/lecturer/courses'
     | '/lecturer/dashboard'
@@ -271,10 +293,12 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/admin/academic'
+    | '/admin/courses'
     | '/admin/dashboard'
     | '/admin/profile'
     | '/admin/statistics'
     | '/admin/users'
+    | '/courses/$courseCode'
     | '/lecturer/assessments'
     | '/lecturer/courses'
     | '/lecturer/dashboard'
@@ -296,10 +320,12 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
   AdminAcademicRoute: typeof AdminAcademicRoute
+  AdminCoursesRoute: typeof AdminCoursesRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
   AdminProfileRoute: typeof AdminProfileRoute
   AdminStatisticsRoute: typeof AdminStatisticsRoute
   AdminUsersRoute: typeof AdminUsersRoute
+  CoursesCourseCodeRoute: typeof CoursesCourseCodeRoute
   LecturerAssessmentsRoute: typeof LecturerAssessmentsRoute
   LecturerCoursesRoute: typeof LecturerCoursesRoute
   LecturerDashboardRoute: typeof LecturerDashboardRoute
@@ -346,6 +372,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAcademicRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/courses': {
+      id: '/admin/courses'
+      path: '/admin/courses'
+      fullPath: '/admin/courses'
+      preLoaderRoute: typeof AdminCoursesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/dashboard': {
       id: '/admin/dashboard'
       path: '/admin/dashboard'
@@ -372,6 +405,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/users'
       fullPath: '/admin/users'
       preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/courses/$courseCode': {
+      id: '/courses/$courseCode'
+      path: '/courses/$courseCode'
+      fullPath: '/courses/$courseCode'
+      preLoaderRoute: typeof CoursesCourseCodeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lecturer/assessments': {
@@ -480,10 +520,12 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
   AdminAcademicRoute: AdminAcademicRoute,
+  AdminCoursesRoute: AdminCoursesRoute,
   AdminDashboardRoute: AdminDashboardRoute,
   AdminProfileRoute: AdminProfileRoute,
   AdminStatisticsRoute: AdminStatisticsRoute,
   AdminUsersRoute: AdminUsersRoute,
+  CoursesCourseCodeRoute: CoursesCourseCodeRoute,
   LecturerAssessmentsRoute: LecturerAssessmentsRoute,
   LecturerCoursesRoute: LecturerCoursesRoute,
   LecturerDashboardRoute: LecturerDashboardRoute,
