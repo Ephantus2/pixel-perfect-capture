@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import type { CurrentUser } from "@/types/auth";
 
-function Row({ label, value }: { label: string; value?: string | number | null }) {
+function Row({ label, value }: { label: string; value?: string | number | null | undefined }) {
   if (value === undefined || value === null || value === "") return null;
   return (
     <div className="flex flex-wrap justify-between gap-2 border-b border-border py-3 last:border-b-0">
