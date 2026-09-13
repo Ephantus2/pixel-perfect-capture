@@ -112,7 +112,7 @@ export function AppShell({
   children,
 }: {
   title: string;
-  description?: string;
+  description?: string | undefined;
   children: ReactNode;
 }) {
   const { user, logout } = useAuth();
