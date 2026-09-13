@@ -42,7 +42,7 @@ function GradeDialog({
   totalMarks,
 }: {
   submission: Submission;
-  totalMarks?: number;
+  totalMarks?: number | undefined;
 }) {
   const [open, setOpen] = useState(false);
   const [marks, setMarks] = useState("");
@@ -152,7 +152,7 @@ export function SubmissionsPanel({
   canDelete = false,
 }: {
   assessmentId: number;
-  totalMarks?: number;
+  totalMarks?: number | undefined;
   canGrade?: boolean;
   canDelete?: boolean;
 }) {

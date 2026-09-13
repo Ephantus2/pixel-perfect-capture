@@ -24,7 +24,7 @@ export function ProtectedRoute({
 }: {
   role?: Role;
   title: string;
-  description?: string;
+  description?: string | undefined;
   children: ReactNode;
 }) {
   const { user, initializing } = useAuth();
