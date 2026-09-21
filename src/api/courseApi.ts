@@ -47,6 +47,12 @@ export async function fetchEnrolledCourses() {
   return toArray<Course>(data);
 }
 
+/** Courses assigned to the signed-in lecturer. */
+export async function fetchTeachingCourses() {
+  const { data } = await api.get("/courses/teaching/courses/");
+  return toArray<Course>(data);
+}
+
 export async function fetchCourseMaterials(courseCode: string) {
   const { data } = await api.get(`/courses/course/materials/${courseCode}/`);
   return toArray<CourseMaterial>(data);

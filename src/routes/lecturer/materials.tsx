@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { LecturerRoute } from "@/components/auth/RoleRoute";
-import { CourseCodePicker } from "@/components/courses/CourseCodePicker";
+import { TeachingCourseSelect } from "@/components/courses/TeachingCourseSelect";
 import { MaterialsPanel } from "@/components/courses/MaterialsPanel";
 
 export const Route = createFileRoute("/lecturer/materials")({
@@ -24,7 +24,7 @@ function LecturerMaterials() {
   const [code, setCode] = useState("");
   return (
     <div className="space-y-6">
-      <CourseCodePicker value={code} onSelect={setCode} label="Choose a course" />
+      <TeachingCourseSelect value={code} onSelect={setCode} autoSelectFirst />
       {code ? <MaterialsPanel courseCode={code} canManage /> : null}
     </div>
   );

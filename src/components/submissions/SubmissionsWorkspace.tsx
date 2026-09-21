@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCourseAssessments } from "@/api/assessmentApi";
-import { CourseCodePicker } from "@/components/courses/CourseCodePicker";
+import { TeachingCourseSelect } from "@/components/courses/TeachingCourseSelect";
 import { SubmissionsPanel } from "@/components/submissions/SubmissionsPanel";
 import { EmptyState, ErrorState, RowsSkeleton } from "@/components/common/States";
 import { Button } from "@/components/ui/button";
@@ -22,13 +22,13 @@ export function SubmissionsWorkspace({ canGrade }: { canGrade: boolean }) {
 
   return (
     <div className="space-y-6">
-      <CourseCodePicker
+      <TeachingCourseSelect
         value={code}
         onSelect={(next) => {
           setCode(next);
           setAssessmentId(null);
         }}
-        label="Choose a course"
+        autoSelectFirst
       />
 
       {code ? (

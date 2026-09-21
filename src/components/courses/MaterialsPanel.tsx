@@ -9,6 +9,7 @@ import {
   uploadMaterial,
 } from "@/api/courseApi";
 import { apiErrorMessage } from "@/utils/apiError";
+import { fileName, fileUrl } from "@/utils/fileUrl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -201,12 +202,19 @@ export function MaterialsPanel({
                   </p>
                 ) : null}
               </div>
-              {material.file ? (
-                <Button asChild variant="outline" size="sm">
-                  <a href={String(material.file)} target="_blank" rel="noreferrer">
-                    <Download className="mr-2 size-4" /> Open
-                  </a>
-                </Button>
+              {fileUrl(material.file) ? (
+                <>
+                  <Button asChild variant="outline" size="sm">
+                    <a href={fileUrl(material.file)!} target="_blank" rel="noreferrer">
+                      <FileText className="mr-2 size-4" /> View
+                    </a>
+                  </Button>
+                  <Button asChild variant="outline" size="sm">
+                    <a href={fileUrl(material.file)!} download={fileName(material.file)}>
+                      <Download className="mr-2 size-4" /> Download
+                    </a>
+                  </Button>
+                </>
               ) : null}
               {canManage ? (
                 <>

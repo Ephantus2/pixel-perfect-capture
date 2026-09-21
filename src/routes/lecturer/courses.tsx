@@ -1,39 +1,44 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { LecturerRoute } from "@/components/auth/RoleRoute";
-import { CourseCodePicker } from "@/components/courses/CourseCodePicker";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { CourseCard } from "@/components/courses/CourseCard";
+import { useTeachingCourses } from "@/components/courses/TeachingCourseSelect";
+import { EmptyState, ErrorState, RowsSkeleton } from "@/components/common/States";
 
 export const Route = createFileRoute("/lecturer/courses")({
   head: () => ({
     meta: [
       { title: "My courses | Chuo LMS" },
-      { name: "description", content: "Open a course you teach by its course code." },
+      { name: "description", content: "Courses you are assigned to teach." },
       { property: "og:title", content: "My courses | Chuo LMS" },
-      { property: "og:description", content: "Open a course you teach by its course code." },
+      { property: "og:description", content: "Courses you are assigned to teach." },
     ],
   }),
   component: () => (
-    <LecturerRoute title="My courses" description="Open a course by code">
+    <LecturerRoute title="My courses" description="Courses you teach">
       <LecturerCourses />
     </LecturerRoute>
   ),
 });
 
 function LecturerCourses() {
-  const navigate = useNavigate();
-  return (
-    <div className="space-y-6">
-      <Alert>
-        <AlertTitle>Course list — coming soon</AlertTitle>
-        <AlertDescription>
-          The backend does not yet expose an endpoint listing the courses assigned to a lecturer.
-          Open a course by entering its code; recent codes are kept on this device.
-        </AlertDescription>
-      </Alert>
-      <CourseCodePicker
-        value=""
-        onSelect={(code) => navigate({ to: "/courses/$courseCode", params: { courseCode: code } })}
+  const query = useTeachingCourses();
+
+  if (query.isLoading) return <RowsSkeleton />;
+  if (query.isError) return <ErrorState error={query.error} />;
+  if (!query.data?.length) {
+    return (
+      <EmptyState
+        title="No courses assigned"
+        description="You are not assigned to any course yet."
       />
+    );
+  }
+
+  return (
+    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      {query.data.map((course) => (
+        <CourseCard key={course.id} course={course} />
+      ))}
     </div>
   );
 }

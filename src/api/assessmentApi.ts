@@ -1,7 +1,7 @@
 import api from "./axios";
 import { toArray } from "./courseApi";
 import type { Assessment, AssessmentPayload } from "@/types/assessment";
-import type { Submission } from "@/types/submission";
+import type { MySubmission, Submission } from "@/types/submission";
 import type { Grade, GradePayload } from "@/types/grade";
 
 export async function createAssessment(payload: AssessmentPayload) {
@@ -56,6 +56,12 @@ export async function deleteSubmission(id: number) {
 export async function fetchAssessmentSubmissions(assessmentId: number) {
   const { data } = await api.get(`/assessment/submissions/${assessmentId}/`);
   return toArray<Submission>(data);
+}
+
+/** Submissions made by the signed-in student. */
+export async function fetchMySubmissions() {
+  const { data } = await api.get("/assessment/mysubmissions/");
+  return toArray<MySubmission>(data);
 }
 
 export async function createGrade(payload: GradePayload) {
