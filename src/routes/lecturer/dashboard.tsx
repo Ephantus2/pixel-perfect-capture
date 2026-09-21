@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { BarChart3, ClipboardList, FileStack, Send } from "lucide-react";
 import { LecturerRoute } from "@/components/auth/RoleRoute";
-import { CourseCodePicker } from "@/components/courses/CourseCodePicker";
+import { TeachingCourseSelect } from "@/components/courses/TeachingCourseSelect";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
@@ -52,11 +52,11 @@ function LecturerDashboard() {
         </div>
       </section>
 
-      <CourseCodePicker
+      <TeachingCourseSelect
         value=""
         onSelect={(code) => navigate({ to: "/courses/$courseCode", params: { courseCode: code } })}
         label="Open one of your courses"
-        description="Enter a course code to manage its materials, assessments and statistics."
+        description="Select a course to manage its materials, assessments and statistics."
       />
 
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
