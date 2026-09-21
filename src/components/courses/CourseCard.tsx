@@ -3,7 +3,7 @@ import { BookOpen, UserRound, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import type { Course } from "@/types/course";
+import { courseLecturerName, courseProgrammeName, type Course } from "@/types/course";
 
 function text(value: unknown) {
   if (value == null || value === "") return null;
@@ -12,8 +12,8 @@ function text(value: unknown) {
 
 export function CourseCard({ course, action }: { course: Course; action?: React.ReactNode }) {
   const code = text(course.code) ?? "—";
-  const lecturer = text(course.lecturer_name) ?? text(course.lecturer);
-  const programme = text(course.programme_name) ?? text(course.programme);
+  const lecturer = courseLecturerName(course);
+  const programme = courseProgrammeName(course);
 
   return (
     <Card className="flex h-full flex-col transition-shadow hover:shadow-[var(--shadow-card)]">
