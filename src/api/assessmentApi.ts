@@ -58,6 +58,12 @@ export async function fetchAssessmentSubmissions(assessmentId: number) {
   return toArray<Submission>(data);
 }
 
+/** Submissions made by the signed-in student. */
+export async function fetchMySubmissions() {
+  const { data } = await api.get("/assessment/mysubmissions/");
+  return toArray<MySubmission>(data);
+}
+
 export async function createGrade(payload: GradePayload) {
   const { data } = await api.post("/assessment/create/grade/", payload);
   return data;
