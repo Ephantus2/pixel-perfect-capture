@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/hooks/useAuth";
+import { courseLecturerName, courseProgrammeName } from "@/types/course";
 
 export const Route = createFileRoute("/courses/$courseCode")({
   head: ({ params }) => ({
@@ -68,13 +69,13 @@ function Overview({ courseCode }: { courseCode: string }) {
           <div>
             <p className="text-xs uppercase tracking-wide text-muted-foreground">Lecturer</p>
             <p className="text-sm font-medium">
-              {String(course.lecturer_name ?? course.lecturer ?? "—")}
+              {courseLecturerName(course) ?? "—"}
             </p>
           </div>
           <div>
             <p className="text-xs uppercase tracking-wide text-muted-foreground">Programme</p>
             <p className="text-sm font-medium">
-              {String(course.programme_name ?? course.programme ?? "—")}
+              {courseProgrammeName(course) ?? "—"}
             </p>
           </div>
         </CardContent>
