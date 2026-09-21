@@ -1,7 +1,7 @@
 import api from "./axios";
 import { toArray } from "./courseApi";
 import type { Assessment, AssessmentPayload } from "@/types/assessment";
-import type { Submission } from "@/types/submission";
+import type { MySubmission, Submission } from "@/types/submission";
 import type { Grade, GradePayload } from "@/types/grade";
 
 export async function createAssessment(payload: AssessmentPayload) {
