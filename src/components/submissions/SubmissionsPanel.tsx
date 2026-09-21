@@ -10,6 +10,7 @@ import {
   updateGrade,
 } from "@/api/assessmentApi";
 import { apiErrorMessage, parseApiError } from "@/utils/apiError";
+import { fileName, fileUrl } from "@/utils/fileUrl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -214,9 +215,14 @@ export function SubmissionsPanel({
             <p className="text-sm text-muted-foreground">No written answer.</p>
           )}
           <div className="flex flex-wrap gap-2">
-            {submission.file ? (
+            {fileUrl(submission.file) ? (
               <Button asChild variant="outline" size="sm">
-                <a href={String(submission.file)} target="_blank" rel="noreferrer">
+                <a
+                  href={fileUrl(submission.file)!}
+                  target="_blank"
+                  rel="noreferrer"
+                  download={fileName(submission.file)}
+                >
                   <Download className="mr-2 size-4" /> Attachment
                 </a>
               </Button>
