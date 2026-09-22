@@ -47,10 +47,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [refresh]);
 
   const login = useCallback(async (payload: LoginPayload) => {
-    await loginUser(payload);
-    const details = await fetchCurrentUser();
-    setUser(details);
-    return details;
+    const session = await loginUser(payload);
+    try {
+      const details = await fetchCurrentUser();
+      setUser(details);
+      return details;
+    } catch {
+      // A freshly registered account may not have a profile yet, so the
+      // details endpoint can fail. Fall back to what login returned.
+      const minimal: CurrentUser = {
+        id: session.user,
+        login_id: payload.login_id,
+        first_name: "",
+        last_name: "",
+        email: "",
+        role: session.role,
+      };
+      setUser(minimal);
+      return minimal;
+    }
   }, []);
 
   const logout = useCallback(async () => {

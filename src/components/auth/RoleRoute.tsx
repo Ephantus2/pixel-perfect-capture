@@ -3,8 +3,9 @@ import { useNavigate } from "@tanstack/react-router";
 import { GraduationCap } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { dashboardPathFor } from "@/context/AuthContext";
-import type { Role } from "@/types/auth";
+import { hasProfile, type Role } from "@/types/auth";
 import { AppShell } from "@/components/layout/AppShell";
+import { ProfileSetup } from "@/components/profile/ProfileSetup";
 
 function FullScreenLoader({ label }: { label: string }) {
   return (
@@ -44,6 +45,14 @@ export function ProtectedRoute({
   if (initializing) return <FullScreenLoader label="Checking your session…" />;
   if (!user) return <FullScreenLoader label="Redirecting to login…" />;
   if (role && user.role !== role) return <FullScreenLoader label="Redirecting…" />;
+
+  if (!hasProfile(user)) {
+    return (
+      <AppShell title="Welcome to Chuo LMS" description="Set up your profile to get started">
+        <ProfileSetup />
+      </AppShell>
+    );
+  }
 
   return (
     <AppShell title={title} description={description}>

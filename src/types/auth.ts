@@ -15,6 +15,14 @@ export interface CurrentUser {
   department?: string;
 }
 
+/** A profile is created separately after registration. */
+export function hasProfile(user: CurrentUser | null | undefined): boolean {
+  if (!user) return false;
+  if (user.role === "ADMIN") return true;
+  if (user.role === "LECTURER") return Boolean(user.department);
+  return Boolean(user.programme) && user.current_year != null;
+}
+
 export interface LoginPayload {
   login_id: string;
   password: string;

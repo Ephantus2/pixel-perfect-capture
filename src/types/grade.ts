@@ -1,7 +1,7 @@
 export interface Grade {
   id: number;
   submission?: number | string | null;
-  marks: number;
+  marks: number | string | null;
   feedback?: string | null;
   graded_at?: string | null;
   created_at?: string | null;
