@@ -1,20 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Search } from "lucide-react";
-import { fetchGrade } from "@/api/assessmentApi";
+import { Award, Loader2 } from "lucide-react";
+import { fetchGrade, fetchMySubmissions } from "@/api/assessmentApi";
 import { StudentRoute } from "@/components/auth/RoleRoute";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ErrorState, RowsSkeleton } from "@/components/common/States";
+import { EmptyState, ErrorState, RowsSkeleton } from "@/components/common/States";
+import { submissionCourseCode, type MySubmission } from "@/types/submission";
+import { apiErrorMessage } from "@/utils/apiError";
 
 export const Route = createFileRoute("/student/grades")({
   head: () => ({
     meta: [
       { title: "My grades | Chuo LMS" },
-      { name: "description", content: "View marks and lecturer feedback for a submission." },
+      { name: "description", content: "View marks and lecturer feedback for your submissions." },
       { property: "og:title", content: "My grades | Chuo LMS" },
       { property: "og:description", content: "Marks and lecturer feedback for your submissions." },
     ],
@@ -26,83 +26,112 @@ export const Route = createFileRoute("/student/grades")({
   ),
 });
 
-function StudentGrades() {
-  const [input, setInput] = useState("");
-  const [submissionId, setSubmissionId] = useState<number | null>(null);
-
+function GradePanel({ submissionId }: { submissionId: number }) {
   const query = useQuery({
     queryKey: ["grade", submissionId],
-    queryFn: () => fetchGrade(submissionId as number),
-    enabled: submissionId != null,
+    queryFn: () => fetchGrade(submissionId),
     retry: false,
   });
 
-  return (
-    <div className="space-y-6">
-      <Card className="max-w-xl">
-        <CardHeader>
-          <CardTitle className="text-base">Look up a grade</CardTitle>
-          <CardDescription>
-            Grades are published per submission. Enter the submission ID you received when you
-            submitted.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form
-            className="flex gap-2"
-            onSubmit={(e) => {
-              e.preventDefault();
-              const value = Number(input);
-              if (Number.isFinite(value) && value > 0) setSubmissionId(value);
-            }}
-          >
-            <div className="flex-1 space-y-2">
-              <Label htmlFor="grade-id" className="sr-only">
-                Submission ID
-              </Label>
-              <Input
-                id="grade-id"
-                type="number"
-                placeholder="Submission ID"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-              />
-            </div>
-            <Button type="submit">
-              <Search className="mr-2 size-4" /> View grade
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
+  if (query.isLoading) {
+    return (
+      <p className="flex items-center gap-2 text-sm text-muted-foreground">
+        <Loader2 className="size-4 animate-spin" /> Fetching grade…
+      </p>
+    );
+  }
 
-      {query.isFetching ? <RowsSkeleton count={1} /> : null}
-      {query.isError ? <ErrorState error={query.error} /> : null}
-      {query.isSuccess && query.data ? (
-        <Card className="max-w-xl">
-          <CardHeader>
-            <CardTitle className="font-display text-xl">
-              Submission #{String(query.data.submission ?? submissionId)}
-            </CardTitle>
-            <CardDescription>
-              {query.data.graded_at ?? query.data.created_at
-                ? `Graded ${new Date(String(query.data.graded_at ?? query.data.created_at)).toLocaleString()}`
-                : "Graded"}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="rounded-lg bg-secondary p-4">
-              <p className="text-xs uppercase tracking-wide text-muted-foreground">Marks</p>
-              <p className="font-display text-4xl font-semibold text-primary">{query.data.marks}</p>
-            </div>
-            <div>
-              <p className="text-xs uppercase tracking-wide text-muted-foreground">Feedback</p>
-              <p className="mt-1 whitespace-pre-wrap text-sm">
-                {query.data.feedback || "No feedback provided."}
-              </p>
-            </div>
-          </CardContent>
-        </Card>
+  if (query.isError) {
+    const message = apiErrorMessage(query.error);
+    const notFound = /not found|404/i.test(message);
+    return (
+      <p className="text-sm text-muted-foreground">
+        {notFound ? "This submission has not been graded yet." : message}
+      </p>
+    );
+  }
+
+  const grade = query.data;
+  if (!grade || grade.marks == null) {
+    return <p className="text-sm text-muted-foreground">This submission has not been graded yet.</p>;
+  }
+
+  const gradedAt = grade.graded_at ?? grade.created_at;
+  return (
+    <div className="rounded-lg bg-secondary p-4">
+      <p className="text-xs uppercase tracking-wide text-muted-foreground">Marks</p>
+      <p className="font-display text-3xl font-semibold text-primary">{String(grade.marks)}</p>
+      <p className="mt-3 text-xs uppercase tracking-wide text-muted-foreground">Feedback</p>
+      <p className="mt-1 whitespace-pre-wrap text-sm">
+        {grade.feedback || "No feedback provided."}
+      </p>
+      {gradedAt ? (
+        <p className="mt-3 text-xs text-muted-foreground">
+          Graded {new Date(String(gradedAt)).toLocaleString()}
+        </p>
       ) : null}
     </div>
+  );
+}
+
+function SubmissionGradeRow({ submission }: { submission: MySubmission }) {
+  const [open, setOpen] = useState(false);
+  const assessment =
+    submission.assessment && typeof submission.assessment === "object" ? submission.assessment : null;
+  const code = submissionCourseCode(submission);
+
+  return (
+    <li className="surface-card space-y-3 p-4">
+      <div className="flex flex-wrap items-center gap-2">
+        {code ? (
+          <Badge variant="secondary" className="font-mono">
+            {code}
+          </Badge>
+        ) : null}
+        <span className="font-medium">{assessment?.title ?? `Submission #${submission.id}`}</span>
+        {assessment?.assessment_type ? (
+          <Badge variant="outline">{assessment.assessment_type}</Badge>
+        ) : null}
+        {assessment?.total_marks != null ? (
+          <span className="text-xs text-muted-foreground">out of {assessment.total_marks}</span>
+        ) : null}
+        <Button
+          size="sm"
+          variant={open ? "outline" : "default"}
+          className="ml-auto"
+          onClick={() => setOpen((v) => !v)}
+        >
+          <Award className="mr-2 size-4" /> {open ? "Hide grade" : "View grade"}
+        </Button>
+      </div>
+      {open ? <GradePanel submissionId={submission.id} /> : null}
+    </li>
+  );
+}
+
+function StudentGrades() {
+  const query = useQuery({
+    queryKey: ["my-submissions"],
+    queryFn: fetchMySubmissions,
+    retry: false,
+  });
+
+  if (query.isLoading) return <RowsSkeleton />;
+  if (query.isError) return <ErrorState error={query.error} />;
+  if (!query.data?.length) {
+    return (
+      <EmptyState
+        title="No submissions yet"
+        description="Once you submit work, its grade will appear here."
+      />
+    );
+  }
+
+  return (
+    <ul className="space-y-4">
+      {query.data.map((submission) => (
+        <SubmissionGradeRow key={submission.id} submission={submission} />
+      ))}
+    </ul>
   );
 }
