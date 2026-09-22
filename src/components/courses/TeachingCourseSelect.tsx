@@ -75,7 +75,7 @@ export function TeachingCourseSelect({
             description="You are not assigned to any course yet."
           />
         ) : (
-          <Select value={value || undefined} onValueChange={onSelect}>
+          <Select {...(value ? { value } : {})} onValueChange={onSelect}>
             <SelectTrigger className="w-full sm:max-w-md">
               <SelectValue placeholder="Select a course" />
             </SelectTrigger>
