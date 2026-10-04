@@ -206,7 +206,12 @@ function SubmitDialog({ assessment }: { assessment: Assessment }) {
   const mutation = useMutation({
     mutationFn: async () => {
       if (!answer.trim() && !file) throw new Error("Add a written answer or attach a file");
-      return createSubmission({ assessment: assessment.id, answer, file });
+      const raw = assessment.id ?? assessment["pk"] ?? assessment["assessment_id"];
+      const assessmentId = Number(raw);
+      if (!Number.isFinite(assessmentId) || assessmentId <= 0) {
+        throw new Error("This assessment has no ID from the server, so it can't be submitted.");
+      }
+      return createSubmission({ assessment: assessmentId, answer, file });
     },
     onSuccess: (data: unknown) => {
       const id = (data as { id?: number } | null)?.id;
