@@ -21,6 +21,8 @@ export const Route = createFileRoute("/register")({
       },
       { property: "og:title", content: "Create account | Chuo LMS" },
       { property: "og:description", content: "Register for access to Chuo LMS." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: RegisterPage,

@@ -44,6 +44,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import { EmptyState, ErrorState, RowsSkeleton } from "@/components/common/States";
 import type { Assessment, AssessmentType } from "@/types/assessment";
+import { useTeachingCourses } from "@/components/courses/TeachingCourseSelect";
+import { selectedTeachingCourseId } from "@/utils/academicSelection";
 
 export function dueStatus(due?: string | null) {
   if (!due) return { label: "No due date", tone: "muted" as const };
@@ -85,7 +87,9 @@ function AssessmentForm({
   onDone: () => void;
 }) {
   const queryClient = useQueryClient();
-  const [course, setCourse] = useState(assessment?.course != null ? String(assessment.course) : "");
+  const teachingCourses = useTeachingCourses();
+  const [course, setCourse] = useState<string | null>(null);
+  const selectedCourse = course ?? String(teachingCourses.data?.find((item) => item.code === courseCode)?.id ?? "");
   const [title, setTitle] = useState(assessment?.title ?? "");
   const [description, setDescription] = useState(assessment?.description ?? "");
   const [type, setType] = useState<AssessmentType>(assessment?.assessment_type ?? "CAT");
@@ -95,7 +99,7 @@ function AssessmentForm({
   const mutation = useMutation({
     mutationFn: async () => {
       const payload = {
-        course: Number(course),
+        course: selectedTeachingCourseId(teachingCourses.data ?? [], selectedCourse),
         title,
         description: description ?? "",
         assessment_type: type,
@@ -109,6 +113,8 @@ function AssessmentForm({
         assessment ? "Assessment updated successfully" : "Assessment created successfully",
       );
       queryClient.invalidateQueries({ queryKey: ["assessments", courseCode] });
+      const chosenCode = teachingCourses.data?.find((item) => String(item.id) === selectedCourse)?.code;
+      if (chosenCode && chosenCode !== courseCode) queryClient.invalidateQueries({ queryKey: ["assessments", chosenCode] });
       onDone();
     },
     onError: (error) => toast.error(apiErrorMessage(error)),
@@ -124,14 +130,15 @@ function AssessmentForm({
     >
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="a-course">Course ID</Label>
-          <Input
-            id="a-course"
-            type="number"
-            value={course}
-            onChange={(e) => setCourse(e.target.value)}
-            required
-          />
+          <Label htmlFor="a-course">Course</Label>
+          <Select value={selectedCourse} onValueChange={setCourse} disabled={teachingCourses.isLoading || !teachingCourses.data?.length}>
+            <SelectTrigger id="a-course"><SelectValue placeholder={teachingCourses.isLoading ? "Loading courses…" : "Choose a course"} /></SelectTrigger>
+            <SelectContent>
+              {teachingCourses.data?.map((item) => <SelectItem key={item.id} value={String(item.id)}>{item.code} — {item.name}</SelectItem>)}
+            </SelectContent>
+          </Select>
+          {teachingCourses.isError ? <ErrorState error={teachingCourses.error} /> : null}
+          {teachingCourses.isSuccess && !teachingCourses.data.length ? <p className="text-sm text-muted-foreground">No teaching courses assigned.</p> : null}
         </div>
         <div className="space-y-2">
           <Label htmlFor="a-type">Type</Label>
@@ -181,7 +188,7 @@ function AssessmentForm({
         </div>
       </div>
       <DialogFooter>
-        <Button type="submit" disabled={mutation.isPending}>
+        <Button type="submit" disabled={mutation.isPending || !selectedCourse || !teachingCourses.data?.length}>
           {mutation.isPending ? (
             <>
               <Loader2 className="mr-2 size-4 animate-spin" />

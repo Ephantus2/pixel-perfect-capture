@@ -9,19 +9,28 @@ import { Button } from "@/components/ui/button";
 import { EmptyState, ErrorState, RowsSkeleton } from "@/components/common/States";
 import { submissionCourseCode, type MySubmission } from "@/types/submission";
 import { apiErrorMessage } from "@/utils/apiError";
+import { AcademicPerformance } from "@/components/assessments/AcademicPerformance";
 
 export const Route = createFileRoute("/student/grades")({
   head: () => ({
     meta: [
       { title: "My grades | Chuo LMS" },
-      { name: "description", content: "View marks and lecturer feedback for your submissions." },
+      { name: "description", content: "Select an academic year to view performance and transcripts, plus submission grades and feedback." },
       { property: "og:title", content: "My grades | Chuo LMS" },
-      { property: "og:description", content: "Marks and lecturer feedback for your submissions." },
+      { property: "og:description", content: "Academic-year results, transcripts, submission marks and feedback." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: () => (
     <StudentRoute title="Grades" description="Marks and feedback per submission">
-      <StudentGrades />
+      <div className="space-y-6">
+        <AcademicPerformance />
+        <section className="space-y-4">
+          <h2 className="font-display text-lg font-semibold">Submission grades</h2>
+          <StudentGrades />
+        </section>
+      </div>
     </StudentRoute>
   ),
 });

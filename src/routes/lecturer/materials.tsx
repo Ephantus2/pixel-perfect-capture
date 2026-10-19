@@ -11,6 +11,8 @@ export const Route = createFileRoute("/lecturer/materials")({
       { name: "description", content: "Upload, update and remove teaching materials for a course." },
       { property: "og:title", content: "Course materials | Chuo LMS" },
       { property: "og:description", content: "Upload and manage teaching materials." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: () => (

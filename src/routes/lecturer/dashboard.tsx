@@ -16,6 +16,8 @@ export const Route = createFileRoute("/lecturer/dashboard")({
       },
       { property: "og:title", content: "Lecturer dashboard | Chuo LMS" },
       { property: "og:description", content: "Materials, assessments, submissions and grading." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: () => (

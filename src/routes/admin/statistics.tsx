@@ -11,6 +11,8 @@ export const Route = createFileRoute("/admin/statistics")({
       { name: "description", content: "Per-course enrollment statistics from the backend." },
       { property: "og:title", content: "Statistics | Chuo LMS" },
       { property: "og:description", content: "Per-course enrollment statistics." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: () => (

@@ -9,6 +9,8 @@ export const Route = createFileRoute("/admin/users")({
       { name: "description", content: "Administer student, lecturer and admin accounts." },
       { property: "og:title", content: "User management | Chuo LMS" },
       { property: "og:description", content: "Administer accounts across the university." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: () => (
