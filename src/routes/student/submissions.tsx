@@ -42,6 +42,8 @@ export const Route = createFileRoute("/student/submissions")({
       { name: "description", content: "Review, update or withdraw work you submitted." },
       { property: "og:title", content: "My submissions | Chuo LMS" },
       { property: "og:description", content: "Review, update or withdraw submitted coursework." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: () => (

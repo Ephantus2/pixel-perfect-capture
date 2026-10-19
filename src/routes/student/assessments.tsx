@@ -14,6 +14,8 @@ export const Route = createFileRoute("/student/assessments")({
       { name: "description", content: "CATs and assignments for the units you are enrolled in." },
       { property: "og:title", content: "Assessments | Chuo LMS" },
       { property: "og:description", content: "CATs and assignments for your enrolled units." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: () => (

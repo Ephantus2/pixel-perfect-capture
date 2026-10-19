@@ -25,6 +25,8 @@ export const Route = createFileRoute("/login")({
         property: "og:description",
         content: "Sign in to Chuo LMS with your university login ID.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: LoginPage,

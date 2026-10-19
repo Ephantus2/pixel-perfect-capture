@@ -23,6 +23,8 @@ export const Route = createFileRoute("/student/dashboard")({
       },
       { property: "og:title", content: "Student dashboard | Chuo LMS" },
       { property: "og:description", content: "Enrolled units, upcoming assessments and grades." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: () => (

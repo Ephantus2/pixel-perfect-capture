@@ -12,6 +12,8 @@ export const Route = createFileRoute("/admin/dashboard")({
       { name: "description", content: "Manage courses, users and academic structure." },
       { property: "og:title", content: "Admin dashboard | Chuo LMS" },
       { property: "og:description", content: "Manage courses, users and academic structure." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: () => (

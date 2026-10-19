@@ -9,6 +9,8 @@ export const Route = createFileRoute("/admin/academic")({
       { name: "description", content: "Faculties, departments and programmes." },
       { property: "og:title", content: "Academic structure | Chuo LMS" },
       { property: "og:description", content: "Faculties, departments and programmes." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: () => (

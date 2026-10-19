@@ -35,6 +35,8 @@ export const Route = createFileRoute("/admin/courses")({
       { name: "description", content: "Create, update and delete university courses." },
       { property: "og:title", content: "Course management | Chuo LMS" },
       { property: "og:description", content: "Create, update and delete university courses." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: () => (

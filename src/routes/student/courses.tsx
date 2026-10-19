@@ -10,10 +10,12 @@ import { CardListSkeleton, EmptyState, ErrorState } from "@/components/common/St
 export const Route = createFileRoute("/student/courses")({
   head: () => ({
     meta: [
-      { title: "My courses | Chuo LMS" },
+      { title: "Enrolled courses | Chuo LMS" },
       { name: "description", content: "Units you are enrolled in this semester." },
-      { property: "og:title", content: "My courses | Chuo LMS" },
+      { property: "og:title", content: "Enrolled courses | Chuo LMS" },
       { property: "og:description", content: "Units you are enrolled in this semester." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: () => (

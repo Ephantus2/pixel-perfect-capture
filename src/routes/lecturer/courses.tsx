@@ -11,6 +11,8 @@ export const Route = createFileRoute("/lecturer/courses")({
       { name: "description", content: "Courses you are assigned to teach." },
       { property: "og:title", content: "My courses | Chuo LMS" },
       { property: "og:description", content: "Courses you are assigned to teach." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: () => (

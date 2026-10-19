@@ -25,6 +25,8 @@ export const Route = createFileRoute("/courses/$courseCode")({
         property: "og:description",
         content: `Overview, materials and assessments for ${params.courseCode}.`,
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: CourseRoute,

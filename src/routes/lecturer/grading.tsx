@@ -9,6 +9,8 @@ export const Route = createFileRoute("/lecturer/grading")({
       { name: "description", content: "Award marks and write feedback for student submissions." },
       { property: "og:title", content: "Grading | Chuo LMS" },
       { property: "og:description", content: "Award marks and feedback for submissions." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: () => (

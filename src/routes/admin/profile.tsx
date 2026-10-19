@@ -10,6 +10,8 @@ export const Route = createFileRoute("/admin/profile")({
       { name: "description", content: "Administrator account details." },
       { property: "og:title", content: "Admin profile | Chuo LMS" },
       { property: "og:description", content: "Administrator account details." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: () => (

@@ -10,6 +10,8 @@ export const Route = createFileRoute("/student/profile")({
       { name: "description", content: "Your registration details as held by the university." },
       { property: "og:title", content: "Student profile | Chuo LMS" },
       { property: "og:description", content: "Your registration details on record." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: () => (
