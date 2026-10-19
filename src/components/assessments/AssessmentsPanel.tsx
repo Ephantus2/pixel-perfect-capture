@@ -113,6 +113,8 @@ function AssessmentForm({
         assessment ? "Assessment updated successfully" : "Assessment created successfully",
       );
       queryClient.invalidateQueries({ queryKey: ["assessments", courseCode] });
+      const chosenCode = teachingCourses.data?.find((item) => String(item.id) === selectedCourse)?.code;
+      if (chosenCode && chosenCode !== courseCode) queryClient.invalidateQueries({ queryKey: ["assessments", chosenCode] });
       onDone();
     },
     onError: (error) => toast.error(apiErrorMessage(error)),
@@ -308,8 +310,6 @@ export function AssessmentsPanel({
     onSuccess: () => {
       toast.success("Assessment deleted successfully");
       queryClient.invalidateQueries({ queryKey: ["assessments", courseCode] });
-      const chosenCode = teachingCourses.data?.find((item) => String(item.id) === selectedCourse)?.code;
-      if (chosenCode && chosenCode !== courseCode) queryClient.invalidateQueries({ queryKey: ["assessments", chosenCode] });
     },
     onError: (error) => toast.error(apiErrorMessage(error)),
   });
