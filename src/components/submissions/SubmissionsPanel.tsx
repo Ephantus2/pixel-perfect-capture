@@ -36,7 +36,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { EmptyState, ErrorState, RowsSkeleton } from "@/components/common/States";
-import type { Submission } from "@/types/submission";
+import { submissionStudentName, type Submission } from "@/types/submission";
 
 function GradeDialog({
   submission,
@@ -197,7 +197,7 @@ export function SubmissionsPanel({
         <li key={submission.id} className="surface-card space-y-3 p-4">
           <div className="flex flex-wrap items-center gap-2">
             <span className="font-medium">
-              {submission.student_name ?? `Student ${submission.student ?? "—"}`}
+              {submissionStudentName(submission)}
             </span>
             <span className="text-xs text-muted-foreground">Submission #{submission.id}</span>
             <span className="ml-auto text-xs text-muted-foreground">
@@ -209,6 +209,12 @@ export function SubmissionsPanel({
                 : null}
             </span>
           </div>
+          {submission.student && typeof submission.student === "object" ? (
+            <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
+              {submission.student.login_id ? <span>{submission.student.login_id}</span> : null}
+              {submission.student.email ? <span className="break-all">{submission.student.email}</span> : null}
+            </div>
+          ) : null}
           {submission.answer ? (
             <p className="whitespace-pre-wrap rounded-md bg-muted p-3 text-sm">{submission.answer}</p>
           ) : (
@@ -218,7 +224,7 @@ export function SubmissionsPanel({
             {fileUrl(submission.file) ? (
               <Button asChild variant="outline" size="sm">
                 <a
-                  href={fileUrl(submission.file)!}
+                  href={fileUrl(submission.file) ?? undefined}
                   target="_blank"
                   rel="noreferrer"
                   download={fileName(submission.file)}
