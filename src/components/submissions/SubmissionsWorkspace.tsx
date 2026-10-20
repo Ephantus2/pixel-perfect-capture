@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchCourseAssessments } from "@/api/assessmentApi";
 import { TeachingCourseSelect } from "@/components/courses/TeachingCourseSelect";
 import { SubmissionsPanel } from "@/components/submissions/SubmissionsPanel";
+import { BulkMarksPanel } from "@/components/submissions/BulkMarksPanel";
 import { EmptyState, ErrorState, RowsSkeleton } from "@/components/common/States";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -51,7 +52,7 @@ export function SubmissionsWorkspace({ canGrade }: { canGrade: boolean }) {
                   variant={a.id === assessmentId ? "default" : "outline"}
                   onClick={() => setAssessmentId(a.id)}
                 >
-                  {a.title} · {a.total_marks} marks
+                  {a.title} · {a.total_marks} marks{a.assessment_mode === "PHYSICAL" ? " · Physical" : ""}
                 </Button>
               ))}
             </div>
@@ -62,13 +63,13 @@ export function SubmissionsWorkspace({ canGrade }: { canGrade: boolean }) {
       {assessmentId ? (
         <section className="space-y-4">
           <h2 className="font-display text-lg font-semibold">
-            Submissions — {active?.title ?? `Assessment #${assessmentId}`}
+            {active?.assessment_mode === "PHYSICAL" ? "Marks" : "Submissions"} — {active?.title ?? `Assessment #${assessmentId}`}
           </h2>
-          <SubmissionsPanel
+          {active?.assessment_mode === "PHYSICAL" ? canGrade ? <BulkMarksPanel key={assessmentId} assessmentId={assessmentId} totalMarks={active.total_marks} /> : <p className="text-sm text-muted-foreground">Physical assessment · No online submissions.</p> : <SubmissionsPanel
             assessmentId={assessmentId}
             totalMarks={active?.total_marks}
             canGrade={canGrade}
-          />
+          />}
         </section>
       ) : null}
     </div>
