@@ -14,7 +14,7 @@ import { fileName, fileUrl } from "@/utils/fileUrl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { gradePayload } from "@/utils/grading";
 import {
   Dialog,
   DialogContent,
@@ -40,14 +40,15 @@ import { submissionStudentName, type Submission } from "@/types/submission";
 
 function GradeDialog({
   submission,
+  assessmentId,
   totalMarks,
 }: {
   submission: Submission;
+  assessmentId: number;
   totalMarks?: number | undefined;
 }) {
   const [open, setOpen] = useState(false);
   const [marks, setMarks] = useState("");
-  const [feedback, setFeedback] = useState("");
   const queryClient = useQueryClient();
 
   const existing = useQuery({
@@ -59,17 +60,15 @@ function GradeDialog({
 
   const mutation = useMutation({
     mutationFn: async () => {
-      const value = Number(marks);
-      if (Number.isNaN(value) || value < 0) throw new Error("Marks cannot be negative");
-      if (totalMarks != null && value > totalMarks)
-        throw new Error(`Marks cannot exceed the total of ${totalMarks}`);
       const gradeId = existing.data?.id;
-      const payload = { submission: submission.id, marks: value, feedback };
+      const student = typeof submission.student === "object" ? submission.student?.id : submission.student;
+      const payload = gradePayload(assessmentId, student, marks, totalMarks);
       return gradeId ? updateGrade(gradeId, payload) : createGrade(payload);
     },
     onSuccess: () => {
       toast.success("Grade saved successfully");
       queryClient.invalidateQueries({ queryKey: ["grade", submission.id] });
+      queryClient.invalidateQueries({ queryKey: ["course-performance"] });
       setOpen(false);
     },
     onError: (error) =>
@@ -82,7 +81,6 @@ function GradeDialog({
     setOpen(next);
     if (next) {
       setMarks(existing.data ? String(existing.data.marks) : "");
-      setFeedback(existing.data?.feedback ?? "");
     }
   }
 
@@ -120,17 +118,9 @@ function GradeDialog({
               required
             />
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="g-feedback">Feedback</Label>
-            <Textarea
-              id="g-feedback"
-              rows={4}
-              value={feedback}
-              onChange={(e) => setFeedback(e.target.value)}
-            />
-          </div>
+          {existing.isError && parseApiError(existing.error).status !== 404 ? <ErrorState error={existing.error} /> : null}
           <DialogFooter>
-            <Button type="submit" disabled={mutation.isPending}>
+            <Button type="submit" disabled={mutation.isPending || existing.isLoading || (existing.isError && parseApiError(existing.error).status !== 404)}>
               {mutation.isPending ? (
                 <>
                   <Loader2 className="mr-2 size-4 animate-spin" /> Saving grade…
@@ -233,7 +223,7 @@ export function SubmissionsPanel({
                 </a>
               </Button>
             ) : null}
-            {canGrade ? <GradeDialog submission={submission} totalMarks={totalMarks} /> : null}
+            {canGrade ? <GradeDialog submission={submission} assessmentId={assessmentId} totalMarks={totalMarks} /> : null}
             {canDelete ? (
               <AlertDialog>
                 <AlertDialogTrigger asChild>

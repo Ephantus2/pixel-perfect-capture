@@ -1,4 +1,5 @@
 export type AssessmentType = "CAT" | "ASSIGNMENT";
+export type AssessmentMode = "PHYSICAL" | "ONLINE";
 
 export interface Assessment {
   id: number;
@@ -7,6 +8,7 @@ export interface Assessment {
   title: string;
   description?: string | null;
   assessment_type: AssessmentType;
+  assessment_mode?: AssessmentMode;
   total_marks: number;
   due_date: string;
   [key: string]: unknown;
@@ -17,6 +19,7 @@ export interface AssessmentPayload {
   title: string;
   description: string;
   assessment_type: AssessmentType;
+  assessment_mode: AssessmentMode;
   total_marks: number;
   due_date: string;
 }

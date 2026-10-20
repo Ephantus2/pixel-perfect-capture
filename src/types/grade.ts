@@ -9,7 +9,7 @@ export interface Grade {
 }
 
 export interface GradePayload {
-  submission: number;
+  assessment: number;
+  student: number;
   marks: number;
-  feedback: string;
 }

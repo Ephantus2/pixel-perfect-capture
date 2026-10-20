@@ -43,7 +43,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { EmptyState, ErrorState, RowsSkeleton } from "@/components/common/States";
-import type { Assessment, AssessmentType } from "@/types/assessment";
+import type { Assessment, AssessmentMode, AssessmentType } from "@/types/assessment";
 import { useTeachingCourses } from "@/components/courses/TeachingCourseSelect";
 import { selectedTeachingCourseId } from "@/utils/academicSelection";
 
@@ -93,6 +93,7 @@ function AssessmentForm({
   const [title, setTitle] = useState(assessment?.title ?? "");
   const [description, setDescription] = useState(assessment?.description ?? "");
   const [type, setType] = useState<AssessmentType>(assessment?.assessment_type ?? "CAT");
+  const [mode, setMode] = useState<AssessmentMode>(assessment?.assessment_mode ?? "ONLINE");
   const [totalMarks, setTotalMarks] = useState(String(assessment?.total_marks ?? 30));
   const [dueDate, setDueDate] = useState(toLocalInput(assessment?.due_date));
 
@@ -103,6 +104,7 @@ function AssessmentForm({
         title,
         description: description ?? "",
         assessment_type: type,
+        assessment_mode: mode,
         total_marks: Number(totalMarks),
         due_date: new Date(dueDate).toISOString(),
       };
@@ -150,6 +152,13 @@ function AssessmentForm({
               <SelectItem value="CAT">CAT</SelectItem>
               <SelectItem value="ASSIGNMENT">Assignment</SelectItem>
             </SelectContent>
+          </Select>
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="a-mode">Assessment mode</Label>
+          <Select value={mode} onValueChange={(v) => { if (v === "PHYSICAL" || v === "ONLINE") setMode(v); }}>
+            <SelectTrigger id="a-mode"><SelectValue /></SelectTrigger>
+            <SelectContent><SelectItem value="ONLINE">Online</SelectItem><SelectItem value="PHYSICAL">Physical</SelectItem></SelectContent>
           </Select>
         </div>
         <div className="space-y-2 sm:col-span-2">
@@ -356,6 +365,7 @@ export function AssessmentsPanel({
                   {assessment.assessment_type === "CAT" ? "CAT" : "Assignment"}
                 </Badge>
                 <DueBadge due={assessment.due_date} />
+                {assessment.assessment_mode ? <Badge variant="outline">{assessment.assessment_mode === "PHYSICAL" ? "Physical" : "Online"}</Badge> : null}
                 <span className="ml-auto text-xs text-muted-foreground">
                   #{assessment.id} · {assessment.total_marks} marks
                 </span>
@@ -374,7 +384,7 @@ export function AssessmentsPanel({
                   : "not specified"}
               </p>
               <div className="mt-auto flex flex-wrap gap-2">
-                {canSubmit ? <SubmitDialog assessment={assessment} /> : null}
+                {canSubmit && assessment.assessment_mode !== "PHYSICAL" ? <SubmitDialog assessment={assessment} /> : null}
                 {canManage ? (
                   <>
                     <Button variant="outline" size="sm" onClick={() => setEditing(assessment)}>
