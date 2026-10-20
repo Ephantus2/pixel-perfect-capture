@@ -129,10 +129,10 @@ function AssessmentForm({
       }}
     >
       <div className="grid gap-4 sm:grid-cols-2">
-        <div className="space-y-2">
+        <div className="space-y-2 sm:col-span-2">
           <Label htmlFor="a-course">Course</Label>
           <Select value={selectedCourse} onValueChange={setCourse} disabled={teachingCourses.isLoading || !teachingCourses.data?.length}>
-            <SelectTrigger id="a-course"><SelectValue placeholder={teachingCourses.isLoading ? "Loading courses…" : "Choose a course"} /></SelectTrigger>
+            <SelectTrigger id="a-course" className="h-auto min-h-9 w-full [&>span]:whitespace-normal [&>span]:text-left"><SelectValue placeholder={teachingCourses.isLoading ? "Loading courses…" : "Choose a course"} /></SelectTrigger>
             <SelectContent>
               {teachingCourses.data?.map((item) => <SelectItem key={item.id} value={String(item.id)}>{item.code} — {item.name}</SelectItem>)}
             </SelectContent>
