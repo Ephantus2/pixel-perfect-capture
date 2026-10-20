@@ -65,12 +65,17 @@ export async function fetchMySubmissions() {
 }
 
 export async function createGrade(payload: GradePayload) {
-  const { data } = await api.post("/assessment/create/grade/", payload);
+  const { data } = await api.post<Grade>("/assessment/create/grade/", payload);
   return data;
 }
 
-export async function updateGrade(id: number, payload: Partial<GradePayload>) {
-  const { data } = await api.put(`/assessment/update/grade/${id}/`, payload);
+export async function updateGrade(id: number, payload: GradePayload) {
+  const { data } = await api.put<Grade | { grade: Grade }>(`/assessment/update/grade/${id}/`, payload);
+  return "grade" in data && data.grade && typeof data.grade === "object" ? data.grade as Grade : data as Grade;
+}
+
+export async function uploadBulkMarks(assessmentId: number, payload: { marks: { registration_number: string; marks: string }[] }) {
+  const { data } = await api.post<{ message: string; assessment: string; students_processed: number }>(`/assessment/assessments/${assessmentId}/marks/bulk/`, payload);
   return data;
 }
 

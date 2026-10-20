@@ -12,3 +12,5 @@
 - Keep Django calls in centralized Axios API modules and use the existing cookie session; this preserves the external backend contract.
 - Parse the performance endpoint by response content and prepare PDF blobs before download clicks; this supports either Django response type and mobile downloads without invented endpoints.
 - Validate academic-year names and teaching-course IDs against their fetched option lists; this prevents submitting arbitrary selections.
+- Use a browser-generated PDF of returned performance rows only when Django returns JSON; preserve original Django PDF responses unchanged and prepare either blob before the download gesture.
+- Validate grading payloads in shared helpers and keep physical bulk entry separate from online submissions; Django grades identify assessments and students rather than submissions.

@@ -6,6 +6,7 @@ import { fetchAcademicYears } from "@/api/academicsApi";
 import { fetchCoursePerformance } from "@/api/performanceApi";
 import { selectedAcademicYear } from "@/utils/academicSelection";
 import { deliverFile } from "@/utils/download";
+import { performanceTranscript } from "@/utils/transcript";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -20,10 +21,25 @@ export function AcademicPerformance() {
     enabled: Boolean(year) && Boolean(years.data?.some((item) => item.name === year)),
     retry: false,
   });
+  const transcript = useQuery({
+    queryKey: ["performance-transcript", year, results.data],
+    queryFn: async () => {
+      const result = results.data;
+      if (!result) throw new Error("Choose an academic year first.");
+      return result.kind === "pdf" ? result.blob : performanceTranscript(result.rows, year);
+    },
+    enabled: Boolean(results.data && (results.data.kind === "pdf" || results.data.rows.length)),
+    retry: false,
+  });
 
   return (
     <section className="space-y-4 border-b border-border pb-6">
-      <h2 className="font-display text-lg font-semibold">Academic performance</h2>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h2 className="font-display text-lg font-semibold">Academic performance & transcript</h2>
+        <Button disabled={!transcript.data || results.isFetching || transcript.isFetching} onClick={() => {
+          if (transcript.data) void deliverFile(transcript.data, "academic_transcript.pdf").catch(() => toast.error("Could not download the transcript. Please try again."));
+        }}><Download className="mr-2 size-4" /> Download transcript</Button>
+      </div>
       {years.isLoading ? <RowsSkeleton /> : years.isError ? <ErrorState error={years.error} /> : !years.data?.length ? (
         <EmptyState title="No academic years available" description="Academic years have not been added yet." />
       ) : (
@@ -39,15 +55,9 @@ export function AcademicPerformance() {
       )}
       {year && results.isLoading ? <p className="flex items-center gap-2 text-sm text-muted-foreground"><Loader2 className="size-4 animate-spin" /> Loading results…</p> : null}
       {results.isError ? <ErrorState error={results.error} /> : null}
-      {results.data?.kind === "pdf" ? (
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <p className="text-sm">Transcript · {year}</p>
-          <Button onClick={() => {
-            const result = results.data;
-            if (result?.kind === "pdf") void deliverFile(result.blob, result.filename).catch(() => toast.error("Could not download the transcript. Please try again."));
-          }}><Download className="mr-2 size-4" /> Download transcript</Button>
-        </div>
-      ) : null}
+      {transcript.isError ? <ErrorState error={transcript.error} /> : null}
+      {results.data?.kind === "pdf" ? <p className="text-sm">Transcript · {year}</p> : null}
+      {results.data?.kind === "rows" && results.data.rows.length > 0 ? <p className="text-xs text-muted-foreground">PDF generated from your course performance results.</p> : null}
       {results.data?.kind === "rows" ? results.data.rows.length ? (
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
