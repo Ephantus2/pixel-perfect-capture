@@ -8,7 +8,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { EmptyState, ErrorState, RowsSkeleton } from "@/components/common/States";
 import { submissionCourseCode, type MySubmission } from "@/types/submission";
-import { apiErrorMessage } from "@/utils/apiError";
+import { apiErrorMessage, parseApiError } from "@/utils/apiError";
+import { useAuth } from "@/hooks/useAuth";
 import { AcademicPerformance } from "@/components/assessments/AcademicPerformance";
 
 export const Route = createFileRoute("/student/grades")({
@@ -35,12 +36,28 @@ export const Route = createFileRoute("/student/grades")({
   ),
 });
 
-function GradePanel({ submissionId }: { submissionId: number }) {
+function GradePanel({ submission }: { submission: MySubmission }) {
+  const { user } = useAuth();
+  const assessmentId =
+    submission.assessment && typeof submission.assessment === "object" ? submission.assessment.id : null;
+  const studentId = user?.id ?? null;
+
   const query = useQuery({
-    queryKey: ["grade", submissionId],
-    queryFn: () => fetchGrade(submissionId),
+    queryKey: ["grade", assessmentId, studentId],
+    queryFn: () => fetchGrade(assessmentId as number, studentId as number),
+    enabled:
+      Number.isInteger(assessmentId) && (assessmentId as number) > 0 &&
+      Number.isInteger(studentId) && (studentId as number) > 0,
     retry: false,
   });
+
+  if (!assessmentId || !studentId) {
+    return (
+      <p className="text-sm text-muted-foreground">
+        Grade information is not available for this submission.
+      </p>
+    );
+  }
 
   if (query.isLoading) {
     return (
@@ -51,8 +68,8 @@ function GradePanel({ submissionId }: { submissionId: number }) {
   }
 
   if (query.isError) {
+    const notFound = parseApiError(query.error).status === 404;
     const message = apiErrorMessage(query.error);
-    const notFound = /not found|404/i.test(message);
     return (
       <p className="text-sm text-muted-foreground">
         {notFound ? "This submission has not been graded yet." : message}
@@ -113,7 +130,7 @@ function SubmissionGradeRow({ submission }: { submission: MySubmission }) {
           <Award className="mr-2 size-4" /> {open ? "Hide grade" : "View grade"}
         </Button>
       </div>
-      {open ? <GradePanel submissionId={submission.id} /> : null}
+      {open ? <GradePanel submission={submission} /> : null}
     </li>
   );
 }

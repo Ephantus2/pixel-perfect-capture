@@ -79,7 +79,10 @@ export async function uploadBulkMarks(assessmentId: number, payload: { marks: { 
   return data;
 }
 
-export async function fetchGrade(submissionId: number) {
-  const { data } = await api.get<Grade>(`/assessment/view/grade/${submissionId}/`);
+/** Grade identified by the assessment ID and student ID rather than a submission ID. */
+export async function fetchGrade(assessmentId: number, studentId: number) {
+  const { data } = await api.get<Grade>(
+    `/assessment/assessments/${assessmentId}/students/${studentId}/grade/`,
+  );
   return data;
 }

@@ -1,7 +1,7 @@
 import { expect, test } from "bun:test";
 import { bulkMarksPayload, gradePayload } from "./grading";
 import { performanceTranscript } from "./transcript";
-import { createAssessment, createGrade, updateGrade, uploadBulkMarks } from "../api/assessmentApi";
+import { createAssessment, createGrade, fetchGrade, updateGrade, uploadBulkMarks } from "../api/assessmentApi";
 import api from "../api/axios";
 
 test("grades use assessment and student IDs rather than submission IDs", () => {
@@ -40,5 +40,20 @@ test("updated Django assessment, grade, and bulk endpoints preserve payloads", a
     expect(grade.id).toBe(8);
     expect(grade.marks).toBe("28.00");
     expect(requests[3]).toEqual({ url: "/assessment/assessments/3/marks/bulk/", data: { marks: [{ registration_number: "P101/4290G/23", marks: "25.00" }] } });
+  } finally { api.defaults.adapter = original; }
+});
+
+test("grades are fetched by assessment and student IDs, not submission IDs", async () => {
+  const original = api.defaults.adapter;
+  const urls = [];
+  api.defaults.adapter = async (config) => {
+    urls.push(config.url);
+    return { data: { id: 1, assessment: 2, student: 1, marks: "28.00", feedback: "", graded_by: 3, graded_at: "2026-10-23T06:25:17.750466Z" }, status: 200, statusText: "OK", headers: {}, config };
+  };
+  try {
+    const grade = await fetchGrade(2, 1);
+    expect(urls[0]).toBe("/assessment/assessments/2/students/1/grade/");
+    expect(grade.marks).toBe("28.00");
+    expect(grade.graded_by).toBe(3);
   } finally { api.defaults.adapter = original; }
 });

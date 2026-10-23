@@ -3,6 +3,7 @@ export interface Grade {
   submission?: number | string | null;
   marks: number | string | null;
   feedback?: string | null;
+  graded_by?: number | string | null;
   graded_at?: string | null;
   created_at?: string | null;
   [key: string]: unknown;
