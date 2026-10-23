@@ -130,7 +130,7 @@ function SubmissionGradeRow({ submission }: { submission: MySubmission }) {
           <Award className="mr-2 size-4" /> {open ? "Hide grade" : "View grade"}
         </Button>
       </div>
-      {open ? <GradePanel submissionId={submission.id} /> : null}
+      {open ? <GradePanel submission={submission} /> : null}
     </li>
   );
 }

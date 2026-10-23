@@ -1,7 +1,7 @@
 import { expect, test } from "bun:test";
 import { bulkMarksPayload, gradePayload } from "./grading";
 import { performanceTranscript } from "./transcript";
-import { createAssessment, createGrade, updateGrade, uploadBulkMarks } from "../api/assessmentApi";
+import { createAssessment, createGrade, fetchGrade, updateGrade, uploadBulkMarks } from "../api/assessmentApi";
 import api from "../api/axios";
 
 test("grades use assessment and student IDs rather than submission IDs", () => {
