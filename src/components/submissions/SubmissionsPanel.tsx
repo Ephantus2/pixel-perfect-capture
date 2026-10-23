@@ -50,24 +50,25 @@ function GradeDialog({
   const [open, setOpen] = useState(false);
   const [marks, setMarks] = useState("");
   const queryClient = useQueryClient();
+  const student = typeof submission.student === "object" ? submission.student?.id : submission.student;
+  const studentId = Number(student);
 
   const existing = useQuery({
-    queryKey: ["grade", submission.id],
-    queryFn: () => fetchGrade(submission.id),
-    enabled: open,
+    queryKey: ["grade", assessmentId, studentId],
+    queryFn: () => fetchGrade(assessmentId, studentId),
+    enabled: open && Number.isInteger(studentId) && studentId > 0,
     retry: false,
   });
 
   const mutation = useMutation({
     mutationFn: async () => {
       const gradeId = existing.data?.id;
-      const student = typeof submission.student === "object" ? submission.student?.id : submission.student;
       const payload = gradePayload(assessmentId, student, marks, totalMarks);
       return gradeId ? updateGrade(gradeId, payload) : createGrade(payload);
     },
     onSuccess: () => {
       toast.success("Grade saved successfully");
-      queryClient.invalidateQueries({ queryKey: ["grade", submission.id] });
+      queryClient.invalidateQueries({ queryKey: ["grade", assessmentId, studentId] });
       queryClient.invalidateQueries({ queryKey: ["course-performance"] });
       setOpen(false);
     },
