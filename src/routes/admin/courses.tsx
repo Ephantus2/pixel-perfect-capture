@@ -206,7 +206,7 @@ function AdminCourses() {
         <CardHeader>
           <CardTitle className="text-base">Manage courses</CardTitle>
           <CardDescription>
-            Lecturer and programme are sent as numeric IDs, as the Django serializer expects.
+            Lecturer and programme are selected from the values provided by the university's records.
           </CardDescription>
         </CardHeader>
         <CardContent>

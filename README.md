@@ -27,7 +27,7 @@ The app runs on http://localhost:8080.
 `.env` at the project root:
 
 ```
-VITE_API_URL=http://127.0.0.1:8000
+VITE_API_URL=https://learning-management-system-zmy7.onrender.com
 ```
 
 Every request goes through `src/api/axios.ts`, which reads `import.meta.env.VITE_API_URL`.
@@ -42,12 +42,12 @@ axios.create({ baseURL: import.meta.env.VITE_API_URL, withCredentials: true })
 Django issues the JWT access and refresh tokens as HTTP-only cookies. The frontend never reads,
 stores or forwards tokens — no localStorage, no Authorization header.
 
-## CORS requirements (Django side)
+## CORS requirements (backend side)
 
 ```python
-CORS_ALLOWED_ORIGINS = ["http://localhost:8080"]
+CORS_ALLOWED_ORIGINS = ["http://localhost:8080", "https://id-preview--899c84bd-98f5-4b72-9b3e-ce0f58cc2ee5.lovable.app", "https://<published-domain>"]
 CORS_ALLOW_CREDENTIALS = True
-CSRF_TRUSTED_ORIGINS = ["http://localhost:8080"]
+CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
 ```
 
 ## Authentication flow
