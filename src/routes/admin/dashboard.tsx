@@ -35,7 +35,7 @@ const SECTIONS = [
     to: "/admin/users",
     label: "User management",
     icon: Users,
-    description: "No backend endpoint yet.",
+    description: "Available in a future release.",
     available: false,
   },
   {

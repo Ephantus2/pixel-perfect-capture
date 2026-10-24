@@ -40,7 +40,7 @@ export function ErrorState({ error }: { error: unknown }) {
   return (
     <Alert variant={notFound ? "default" : "destructive"}>
       <AlertTriangle className="size-4" />
-      <AlertTitle>{notFound ? "Not available from the backend" : "Request failed"}</AlertTitle>
+      <AlertTitle>{notFound ? "Not available yet" : "Request failed"}</AlertTitle>
       <AlertDescription>
         {notFound
           ? "This information isn't available right now. It may not have been set up yet."

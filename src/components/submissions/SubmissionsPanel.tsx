@@ -172,7 +172,7 @@ export function SubmissionsPanel({
       return (
         <EmptyState
           title="No submissions found"
-          description="The backend returned 404 for this assessment ID."
+          description="No submissions were found for this assessment."
         />
       );
     }

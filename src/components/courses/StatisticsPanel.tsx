@@ -21,7 +21,7 @@ export function StatisticsPanel({ courseCode }: { courseCode: string }) {
   const entries = Object.entries(data);
 
   if (!entries.length) {
-    return <p className="text-sm text-muted-foreground">The backend returned no statistics.</p>;
+    return <p className="text-sm text-muted-foreground">No statistics are available for this course yet.</p>;
   }
 
   return (

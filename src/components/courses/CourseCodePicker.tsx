@@ -54,7 +54,7 @@ export function CourseCodePicker({
   onSelect,
   suggestions = [],
   label = "Open a course",
-  description = "Enter a course code, e.g. CSC301. The backend looks courses up by code.",
+  description = "Enter a course code, e.g. CSC301.",
 }: {
   value: string;
   onSelect: (code: string) => void;
