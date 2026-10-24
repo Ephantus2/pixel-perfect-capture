@@ -7,4 +7,4 @@
 - [x] Display nested student identity in lecturer grading.
 - [x] Select teaching courses by name when creating assessments; submit their IDs.
 - [x] Test selection rules and browser flows against supplied response fixtures.
-- [ ] Verify against the live Django server — blocked: port 8000 is unreachable from this workspace.
+- [ ] Verify key flows against the live hosted backend (https://learning-management-system-zmy7.onrender.com) — needs a real account to sign in with.

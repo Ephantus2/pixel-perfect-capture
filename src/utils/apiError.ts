@@ -15,7 +15,7 @@ const STATUS_MESSAGES: Record<number, string> = {
   404: "Requested resource was not found.",
   409: "This action conflicts with existing data.",
   422: "Some of the submitted data could not be processed.",
-  500: "The Django server encountered an internal error.",
+  500: "Something went wrong on our end. Please try again later.",
 };
 
 function humanizeField(field: string) {
@@ -43,14 +43,14 @@ export function parseApiError(error: unknown): ParsedApiError {
 
   if (error.code === "ECONNABORTED") {
     return {
-      message: "The request timed out. The Django server took too long to respond.",
+      message: "The request timed out. Please try again in a moment.",
       fieldErrors,
     };
   }
 
   if (!error.response) {
     return {
-      message: "Unable to connect to the Django server. Make sure the backend is running.",
+      message: "We couldn't reach the service. Please check your connection and try again.",
       fieldErrors,
     };
   }

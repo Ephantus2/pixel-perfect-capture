@@ -63,7 +63,7 @@ function Overview({ courseCode }: { courseCode: string }) {
         <CardTitle className="font-display text-2xl">{course?.name ?? courseCode}</CardTitle>
         <CardDescription>
           {course?.description ??
-            "The backend has no single-course endpoint, so details appear here only for units you are enrolled in."}
+            "Full details appear here for units you are enrolled in."}
         </CardDescription>
       </CardHeader>
       {course ? (
@@ -137,7 +137,7 @@ function CourseDetail({ courseCode }: { courseCode: string }) {
         <TabsContent value="management">
           <ComingSoon
             feature="Per-course management"
-            note="Courses are updated and deleted by ID from Course management — the backend has no lookup by code."
+            note="Course updates and deletions are handled from Course management."
           />
         </TabsContent>
       ) : null}

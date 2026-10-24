@@ -40,10 +40,10 @@ export function ErrorState({ error }: { error: unknown }) {
   return (
     <Alert variant={notFound ? "default" : "destructive"}>
       <AlertTriangle className="size-4" />
-      <AlertTitle>{notFound ? "Not available from the backend" : "Request failed"}</AlertTitle>
+      <AlertTitle>{notFound ? "Not available yet" : "Request failed"}</AlertTitle>
       <AlertDescription>
         {notFound
-          ? "This endpoint returned 404. The data may not exist yet on the Django backend."
+          ? "This information isn't available right now. It may not have been set up yet."
           : apiErrorMessage(error)}
       </AlertDescription>
     </Alert>
@@ -79,7 +79,7 @@ export function ComingSoon({ feature, note }: { feature: string; note?: string }
       <Hammer className="size-7 text-muted-foreground" />
       <p className="font-display text-base font-semibold">{feature} — Coming soon</p>
       <p className="max-w-md text-sm text-muted-foreground">
-        {note ?? "The Django backend does not expose an endpoint for this yet."}
+        {note ?? "This feature isn't available yet. Check back soon."}
       </p>
     </div>
   );
