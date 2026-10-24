@@ -151,6 +151,7 @@ function AssessmentForm({
             <SelectContent>
               <SelectItem value="CAT">CAT</SelectItem>
               <SelectItem value="ASSIGNMENT">Assignment</SelectItem>
+              <SelectItem value="EXAM">Exam</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -361,8 +362,8 @@ export function AssessmentsPanel({
           {query.data.map((assessment) => (
             <article key={assessment.id} className="surface-card flex flex-col gap-3 p-4">
               <div className="flex flex-wrap items-center gap-2">
-                <Badge variant={assessment.assessment_type === "CAT" ? "default" : "secondary"}>
-                  {assessment.assessment_type === "CAT" ? "CAT" : "Assignment"}
+                <Badge variant={assessment.assessment_type === "CAT" ? "default" : assessment.assessment_type === "EXAM" ? "destructive" : "secondary"}>
+                  {assessment.assessment_type === "CAT" ? "CAT" : assessment.assessment_type === "EXAM" ? "Exam" : "Assignment"}
                 </Badge>
                 <DueBadge due={assessment.due_date} />
                 {assessment.assessment_mode ? <Badge variant="outline">{assessment.assessment_mode === "PHYSICAL" ? "Physical" : "Online"}</Badge> : null}

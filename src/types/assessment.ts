@@ -1,4 +1,4 @@
-export type AssessmentType = "CAT" | "ASSIGNMENT";
+export type AssessmentType = "CAT" | "ASSIGNMENT" | "EXAM";
 export type AssessmentMode = "PHYSICAL" | "ONLINE";
 
 export interface Assessment {
