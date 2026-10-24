@@ -86,8 +86,7 @@ function MaterialForm({
           required
         />
         <p className="text-xs text-muted-foreground">
-          Sent as the <code>course</code> field. Use the value your Django serializer expects
-          (course ID or code).
+          Enter the course this material belongs to (course ID or code).
         </p>
       </div>
       <div className="space-y-2">

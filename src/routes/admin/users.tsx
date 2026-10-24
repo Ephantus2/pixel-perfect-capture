@@ -17,7 +17,7 @@ export const Route = createFileRoute("/admin/users")({
     <AdminRoute title="User management" description="Accounts and roles">
       <ComingSoon
         feature="User management"
-        note="The Django backend exposes register, login, logout and details only — there is no user listing or role-assignment endpoint yet."
+        note="Accounts and roles are managed by the university administration. New users can create their own account through registration."
       />
     </AdminRoute>
   ),
