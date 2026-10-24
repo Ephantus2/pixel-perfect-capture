@@ -6,6 +6,7 @@ import { dashboardPathFor } from "@/context/AuthContext";
 
 export const Route = createFileRoute("/")({
   head: () => ({
+
     meta: [
       { title: "Chuo LMS | University Learning Management System" },
       {
@@ -37,7 +38,7 @@ function Index() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-3 bg-background">
       <GraduationCap className="size-8 animate-pulse text-primary" />
-      <p className="text-sm text-muted-foreground">Loading Chuo LMS…</p>
+      <p className="text-sm text-muted-foreground">Loading University LMS…</p>
     </div>
   );
 }
